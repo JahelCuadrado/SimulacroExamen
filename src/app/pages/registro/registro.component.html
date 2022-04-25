@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form class="container">
+    <form class="container" #registroForm="ngForm" (ngSubmit)="onSubmit(registroForm)">
         <h1>REGISTRO</h1>
         <div class="row">
 
@@ -19,6 +19,8 @@
               id="nombre"
               aria-describedby="emailHelp"
               placeholder="Usuario *"
+              [(ngModel)]="usuarioModel.name"
+              name="name"
               required>
             </div>
 
@@ -29,6 +31,8 @@
               class="form-control"
               id="contrasena"
               placeholder="Contraseña *"
+              [(ngModel)]="usuarioModel.password"
+              name="password"
               required>
             </div>
 
@@ -39,20 +43,23 @@
               class="form-control"
               id="contrasena-repetida"
               placeholder="Repetir contraseña *"
+              (keyup)="recogerDatos($event)"
               required>
             </div>
 
             <div class="form-group col-12">
-              <label for="telefono"></label>
+              <label for="email"></label>
               <input
               type="text"
               class="form-control"
               id="email"
               placeholder="Email *"
+              [(ngModel)]="usuarioModel.email"
+              name="email"
               required>
             </div>
 
-            <button type="submit" class="btn btn-primary red">Registrarse</button>
+            <button type="submit" class="btn btn-primary red" [disabled]="!registroForm.form.valid">Registrarse</button>
         </div>
       </form>
 </body>
