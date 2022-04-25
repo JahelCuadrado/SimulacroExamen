@@ -1,0 +1,68 @@
+*{
+  font-family: 'SF Pro Display', 'Product Sans', 'Arial';
+}
+
+
+
+form{
+max-width: 30%;
+max-height: 50%;
+margin: auto;
+margin-top: 50px;
+border: 1px solid rgb(202, 202, 202);
+padding: 3em 3em 3em 3em;
+border-radius: 50px;
+}
+
+
+
+h1{
+  text-align: center;
+  font-family: 'SF Pro Display';
+  font-size: 2vw;
+  margin-bottom: 30px;
+
+}
+
+
+body{
+  animation: efecto3d 1s;
+}
+
+
+input{
+  border-radius: 50px;
+}
+
+
+.form-check{
+  margin-top: 50px;
+  margin-left: 15px;
+}
+
+button{
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 50px;
+  padding: 10px;
+
+}
+
+.red{
+  background-color: red;
+  margin-top: 35px;
+  border-color: red;
+}
+
+@keyframes efecto3d{
+  0%{
+    opacity: 0.5;
+    transform: perspective(200px) rotateX(90deg);
+  }
+  40%{
+    transform: perspective(200px) rotateX(-20deg);
+  }
+  70%{
+    transform: perspective(200px) rotateX(20deg);
+  }
+}
