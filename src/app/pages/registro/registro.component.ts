@@ -1,5 +1,6 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/model/usuario';
 
 @Component({
@@ -9,33 +10,49 @@ import { Usuario } from 'src/app/model/usuario';
 })
 export class RegistroComponent implements OnInit {
 
+  //Objetos
   public usuario: Usuario = new Usuario();
-  public usuarioModel: Usuario = new Usuario();
 
-  public validateName:boolean;
+  //Booleanas
   public validatePassword:boolean;
-  public validateEmail:boolean;
+  public submitted=false;
 
-  public contrasenaRepetida:string;
+  //Form
+  public registroForm: FormGroup;
 
-  constructor() {
-    this.validateName=false;
+
+  constructor(private formBuilder: FormBuilder, private router:Router) {
     this.validatePassword=false;
-    this.validateEmail=false;
 
-    this.contrasenaRepetida=""
+
+    this.registroForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      password: ['', Validators.required],
+      contrasenarepe: ['', Validators.required],
+      email:['', [Validators.required, Validators.email]]
+    });
+
+
    }
 
   ngOnInit(): void {
+    //console.log(this.registroForm.controls)
   }
 
-  onSubmit(f: NgForm){
+  onSubmit():void{
+    this.submitted=true
+
+    if (this.registroForm.value.password != this.registroForm.value.contrasenarepe) {
+        this.validatePassword=true;
+    }else{
+        this.validatePassword=false
+    }
 
   }
 
-  public recogerDatos(event:any):void{
-		let valueInput:string=event.target.value;
-		this.contrasenaRepetida=valueInput;
-	}
+  get f() {
+    return this.registroForm.controls;
+  }
+
 
 }

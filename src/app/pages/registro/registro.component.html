@@ -7,45 +7,49 @@
     <title>Document</title>
 </head>
 <body>
-    <form class="container" #registroForm="ngForm" (ngSubmit)="onSubmit(registroForm)">
+    <form class="container" [formGroup]="registroForm" (ngSubmit)="onSubmit()">
         <h1>REGISTRO</h1>
         <div class="row">
 
             <div class="form-group col-12">
-              <label for="nombre"></label>
+              <label for="name"></label>
               <input
-              type="text"
+              type="name"
               class="form-control"
-              id="nombre"
-              aria-describedby="emailHelp"
+              id="name"
               placeholder="Usuario *"
-              [(ngModel)]="usuarioModel.name"
-              name="name"
+              formControlName="name"
+              [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
               required>
             </div>
+        <div *ngIf="f['name'].errors && f['name'].errors['required'] && submitted">Se requiere un usuario</div>
 
             <div class="form-group col-12">
               <label for="contrasena"></label>
               <input
-              type="text"
+              type="password"
               class="form-control"
               id="contrasena"
               placeholder="Contraseña *"
-              [(ngModel)]="usuarioModel.password"
-              name="password"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
               required>
             </div>
+            <div *ngIf="f['password'].errors && f['password'].errors['required'] && submitted">Se requiere una contraseña</div>
 
             <div class="form-group col-12">
               <label for="contrasena-repetida"></label>
               <input
-              type="text"
+              type="password"
               class="form-control"
               id="contrasena-repetida"
               placeholder="Repetir contraseña *"
-              (keyup)="recogerDatos($event)"
+              formControlName="contrasenarepe"
+              [ngClass]="{ 'is-invalid': submitted && f['contrasenarepe'].errors }"
               required>
             </div>
+            <div *ngIf="f['contrasenarepe'].errors && f['contrasenarepe'].errors['required'] && submitted">Se requiere repetir la contraseña</div>
+            <div *ngIf="validatePassword">Las contraseñas no coinciden</div>
 
             <div class="form-group col-12">
               <label for="email"></label>
@@ -54,12 +58,16 @@
               class="form-control"
               id="email"
               placeholder="Email *"
-              [(ngModel)]="usuarioModel.email"
-              name="email"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
               required>
             </div>
+            <div *ngIf="f['email'].errors && f['email'].errors['required'] && submitted">Se requiere un email</div>
+            <div *ngIf="f['email'].errors && f['email'].errors['email'] && submitted">Se requiere un email válido</div>
 
-            <button type="submit" class="btn btn-primary red" [disabled]="!registroForm.form.valid">Registrarse</button>
+
+
+            <button type="submit" class="btn btn-primary red" >Registrarse</button>
         </div>
       </form>
 </body>
