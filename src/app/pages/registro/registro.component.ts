@@ -1,6 +1,8 @@
+import { DatosService } from './../../servicios/datos.service';
+import { RegistroService } from './../../servicios/registro.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/model/usuario';
 
 @Component({
@@ -10,18 +12,16 @@ import { Usuario } from 'src/app/model/usuario';
 })
 export class RegistroComponent implements OnInit {
 
-  //Objetos
-  public usuario: Usuario = new Usuario();
-
   //Booleanas
   public validatePassword:boolean;
   public submitted=false;
+  public error = false
 
   //Form
   public registroForm: FormGroup;
 
 
-  constructor(private formBuilder: FormBuilder, private router:Router) {
+  constructor(private formBuilder: FormBuilder, private router:Router, private registroService:RegistroService , private datosService:DatosService) {
     this.validatePassword=false;
 
 
@@ -29,24 +29,53 @@ export class RegistroComponent implements OnInit {
       name: ['', [Validators.required]],
       password: ['', Validators.required],
       contrasenarepe: ['', Validators.required],
-      email:['', [Validators.required, Validators.email]]
+      email:['', [Validators.required, Validators.email]],
+      condiciones:[false, [Validators.required]]
     });
 
 
    }
 
   ngOnInit(): void {
-    //console.log(this.registroForm.controls)
+   //console.log(this.registroForm.controls)
   }
 
   onSubmit():void{
     this.submitted=true
+    this.error=true
 
-    if (this.registroForm.value.password != this.registroForm.value.contrasenarepe) {
-        this.validatePassword=true;
-    }else{
-        this.validatePassword=false
+
+    if(this.registroForm.value.password != this.registroForm.value.contrasenarepe){
+        this.validatePassword=true
+        return
     }
+
+
+    if(this.registroForm.invalid){
+      return
+    }
+
+        this.registroService.registro(
+          this.registroForm.value.name,
+          this.registroForm.value.email,
+          this.registroForm.value.password
+
+        ).subscribe(login => {
+
+          this.datosService.introducirDatos(
+            this.registroForm.value.name,
+            this.registroForm.value.email,
+            this.registroForm.value.password
+          );
+
+          console.log('Inicio sesion ' + JSON.stringify(login));
+
+          this.router.navigate(['/login']);
+
+        });
+
+
+
 
   }
 

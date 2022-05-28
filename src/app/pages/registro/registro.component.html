@@ -14,6 +14,7 @@
             <div class="form-group col-12">
               <label for="name"></label>
               <input
+              [class.temblor]="this.error"
               type="name"
               class="form-control"
               id="name"
@@ -27,6 +28,7 @@
             <div class="form-group col-12">
               <label for="contrasena"></label>
               <input
+              [class.temblor]="this.error"
               type="password"
               class="form-control"
               id="contrasena"
@@ -40,12 +42,13 @@
             <div class="form-group col-12">
               <label for="contrasena-repetida"></label>
               <input
+              [class.temblor]="this.error"
               type="password"
               class="form-control"
               id="contrasena-repetida"
               placeholder="Repetir contraseña *"
               formControlName="contrasenarepe"
-              [ngClass]="{ 'is-invalid': submitted && f['contrasenarepe'].errors }"
+              [ngClass]="{ 'is-invalid': submitted && f['contrasenarepe'].errors || validatePassword}"
               required>
             </div>
             <div *ngIf="f['contrasenarepe'].errors && f['contrasenarepe'].errors['required'] && submitted">Se requiere repetir la contraseña</div>
@@ -54,6 +57,7 @@
             <div class="form-group col-12">
               <label for="email"></label>
               <input
+              [class.temblor]="this.error"
               type="text"
               class="form-control"
               id="email"
@@ -64,6 +68,24 @@
             </div>
             <div *ngIf="f['email'].errors && f['email'].errors['required'] && submitted">Se requiere un email</div>
             <div *ngIf="f['email'].errors && f['email'].errors['email'] && submitted">Se requiere un email válido</div>
+
+
+            <div class="form-check divcenter temblor">
+              <input
+                  [class.temblor]="this.error"
+                  class="form-check-input"
+                  type="checkbox"
+                  name="condiciones"
+                  value=""
+                  id="condiciones"
+                  formControlName="condiciones"
+                  [ngClass]="{ 'is-invalid': submitted && f['condiciones'].errors }"
+                  required>
+              <label class="form-check-label temblor" for="condiciones">
+                  He leído y acepto los términos y condiciones de servicio.
+              </label>
+          </div>
+          <div *ngIf="f['condiciones'].errors  && submitted">Debes aceptar los términos y condiciones >:(</div>
 
 
 

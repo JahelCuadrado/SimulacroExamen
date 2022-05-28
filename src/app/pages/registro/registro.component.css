@@ -66,3 +66,14 @@ button{
     transform: perspective(200px) rotateX(20deg);
   }
 }
+
+.temblor{
+  -webkit-animation: tiembla 0.9s;
+}
+
+
+@keyframes tiembla{
+  0%  { transform:rotateZ(-0deg); }
+  50% { transform:rotateZ( 0deg) scale(.9); }
+  100%{ transform:rotateZ( 0deg); }
+}

@@ -7,16 +7,38 @@
     <title>Document</title>
 </head>
 <body>
-    <form class="container">
+    <form class="container" [formGroup]="registroForm" (ngSubmit)="onSubmit()">
         <h1>LOGIN</h1>
         <div class="row">
             <div class="form-group col-12">
                 <label for="nombre-apellidos"></label>
-                <input type="text" class="form-control" id="nombre-apellidos" aria-describedby="emailHelp" placeholder="Usuario (email) *">
+                <input
+                type="text"
+                class="form-control"
+                id="nombre-apellidos"
+                aria-describedby="emailHelp"
+                placeholder="Usuario (email) *"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+
+                <div *ngIf="f['email'].errors && f['email'].errors['required'] && submitted">Se requiere un email válido</div>
+
             </div>
             <div class="form-group col-12">
                 <label for="telefono"></label>
-                <input type="text" class="form-control" id="telefono" placeholder="Contraseña *" >
+                <input
+                type="password"
+                class="form-control"
+                id="telefono"
+                placeholder="Contraseña *"
+                formControlName="password"
+                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                >
+
+                <div  *ngIf="f['password'].errors && f['password'].errors['required'] && submitted">Se requiere una contraseña</div>
+
+                <div class="error" *ngIf="usuarioIncorrecto">Usuario o contraseña INCORRECTO</div>
+
             </div>
 
             <button type="submit" class="btn btn-primary">Enviar</button>
